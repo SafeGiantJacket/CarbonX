@@ -1,0 +1,32 @@
+{
+  "canisters": {
+    "registry": {
+      "main": "motoko/registry/main.mo",
+      "type": "motoko"
+    },
+    "issuance": {
+      "main": "motoko/issuance/main.mo",
+      "type": "motoko"
+    },
+    "marketplace": {
+      "main": "motoko/marketplace/main.mo",
+      "type": "motoko"
+    },
+    "retirement": {
+      "main": "motoko/retirement/main.mo",
+      "type": "motoko"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
