@@ -1,3 +1,6 @@
-service : {
-  ping: () -> (text) query;
-}
+type Issuance = service {
+  getBalance : (principal) -> (nat) query;
+  mint : (nat) -> ();
+  myBalance : () -> (nat) query;
+};
+service : Issuance
