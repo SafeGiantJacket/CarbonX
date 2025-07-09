@@ -4,10 +4,9 @@ import HashMap "mo:base/HashMap";
 
 actor class Issuance() = this {
 
-  let balances = HashMap.HashMap<Principal, Nat>(10, Principal.equal, Principal.hash);
+  let balances = HashMap.HashMap<Principal, Nat>(100, Principal.equal, Principal.hash);
 
-  // Mint to any user
-  public func mint(to: Principal, amount: Nat) : async () {
+  public shared ({ caller }) func mint(to: Principal, amount: Nat) : async () {
     let current = balances.get(to);
     let newBalance = switch current {
       case (?val) val + amount;
@@ -16,8 +15,11 @@ actor class Issuance() = this {
     balances.put(to, newBalance);
   };
 
-  // Deduct from user if they have enough
-  public func deduct(from: Principal, amount: Nat) : async Bool {
+  public shared ({ caller }) func mintToCaller(amount: Nat) : async () {
+    await mint(caller, amount);
+  };
+
+  public shared ({ caller }) func deduct(from: Principal, amount: Nat) : async Bool {
     switch (balances.get(from)) {
       case (?val) {
         if (val >= amount) {
@@ -31,11 +33,14 @@ actor class Issuance() = this {
     }
   };
 
-  // Get any user's balance
   public query func getBalance(user: Principal) : async Nat {
     switch (balances.get(user)) {
       case (?val) val;
       case null 0;
     }
+  };
+
+  public shared ({ caller }) func getMyBalance() : async Nat {
+    await getBalance(caller);
   };
 };

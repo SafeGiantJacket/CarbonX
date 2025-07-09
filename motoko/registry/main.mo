@@ -1,45 +1,37 @@
-import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
 import Hash "mo:base/Hash";
 import Iter "mo:base/Iter";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
-import Buffer "mo:base/Buffer";
-import Array "mo:base/Array";
-import Nat "mo:base/Nat";
 import Nat64 "mo:base/Nat64";
+import Nat "mo:base/Nat";
 
 actor Registry {
 
+  // ---- TYPES ----
   type Project = {
     id: Nat;
     name: Text;
     owner: Principal;
-    metadata: Text;
-    createdAt: Nat;
+    metadata: Text;  // IPFS or descriptive JSON
+    createdAt: Nat;  // Unix timestamp
   };
 
+  // ---- STORAGE ----
   var nextId: Nat = 1;
-  let projects = HashMap.HashMap<Nat, Project>(10, Nat.equal, Hash.hash);
+  let projects = HashMap.HashMap<Nat, Project>(100, Nat.equal, Hash.hash);
 
-  public query func getAllProjects(): async [Project] {
-    return Iter.toArray(projects.vals());
-  };
-
-  public query func getProject(id: Nat): async ?Project {
-    return projects.get(id);
-  };
-
+  // ---- REGISTER A NEW PROJECT ----
   public shared ({ caller }) func registerProject(name: Text, metadata: Text): async Nat {
     let now = Nat64.toNat(Nat64.fromIntWrap(Time.now()));
 
     let id = nextId;
     let project: Project = {
-      id = id;
-      name = name;
+      id;
+      name;
       owner = caller;
-      metadata = metadata;
+      metadata;
       createdAt = now;
     };
 
@@ -48,11 +40,20 @@ actor Registry {
     return id;
   };
 
+  // ---- GET A SPECIFIC PROJECT ----
+  public query func getProject(id: Nat): async ?Project {
+    projects.get(id);
+  };
+
+  // ---- GET ALL PROJECTS ----
+  public query func getAllProjects(): async [Project] {
+    Iter.toArray(projects.vals());
+  };
+
+  // ---- DELETE (ONLY OWNER) ----
   public shared ({ caller }) func deleteProject(id: Nat): async Bool {
     switch (projects.get(id)) {
-      case (null) {
-        return false;
-      };
+      case null return false;
       case (?project) {
         if (project.owner == caller) {
           ignore projects.remove(id);
@@ -61,7 +62,6 @@ actor Registry {
           return false;
         };
       };
-    };
+    }
   };
-
 };

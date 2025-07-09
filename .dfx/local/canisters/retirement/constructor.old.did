@@ -1,3 +1,12 @@
+type RetirementRecord = 
+ record {
+   amount: nat;
+   reason: text;
+   timestamp: nat;
+   user: principal;
+ };
 service : {
-  ping: () -> (text) query;
+  getAllRetirements: () -> (vec RetirementRecord) query;
+  getUserRetirements: (user: principal) -> (vec RetirementRecord) query;
+  retire: (amount: nat, reason: text) -> (bool);
 }
