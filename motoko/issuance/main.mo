@@ -4,32 +4,36 @@ import HashMap "mo:base/HashMap";
 
 actor class Issuance() = this {
 
-  // Tracks balances of carbon credits per user
   let balances = HashMap.HashMap<Principal, Nat>(10, Principal.equal, Principal.hash);
 
-  // Mint credits to the caller
-  public func mint(amount: Nat) : async () {
-    let caller = Principal.fromActor(this);
-    let current = balances.get(caller);
+  // Mint to any user
+  public func mint(to: Principal, amount: Nat) : async () {
+    let current = balances.get(to);
     let newBalance = switch current {
       case (?val) val + amount;
       case null amount;
     };
-    balances.put(caller, newBalance);
+    balances.put(to, newBalance);
   };
 
-  // Query credit balance for any user
-  public query func getBalance(user: Principal) : async Nat {
-    switch (balances.get(user)) {
-      case (?val) val;
-      case null 0;
+  // Deduct from user if they have enough
+  public func deduct(from: Principal, amount: Nat) : async Bool {
+    switch (balances.get(from)) {
+      case (?val) {
+        if (val >= amount) {
+          balances.put(from, val - amount);
+          return true;
+        } else {
+          return false;
+        };
+      };
+      case null return false;
     }
   };
 
-  // Query caller's own balance
-  public query func myBalance() : async Nat {
-    let caller = Principal.fromActor(this);
-    switch (balances.get(caller)) {
+  // Get any user's balance
+  public query func getBalance(user: Principal) : async Nat {
+    switch (balances.get(user)) {
       case (?val) val;
       case null 0;
     }

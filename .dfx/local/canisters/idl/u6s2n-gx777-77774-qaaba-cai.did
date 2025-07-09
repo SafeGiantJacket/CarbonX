@@ -1,3 +1,13 @@
-service : {
-  ping: () -> (text) query;
-}
+type Marketplace = 
+ service {
+   buy: (id: nat, quantity: nat) -> ();
+   getListings: () -> (vec Listing) query;
+   list: (amount: nat, price: nat) -> (nat);
+ };
+type Listing = 
+ record {
+   amount: nat;
+   price: nat;
+   seller: principal;
+ };
+service : () -> Marketplace

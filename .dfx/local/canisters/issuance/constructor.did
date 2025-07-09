@@ -1,6 +1,6 @@
 type Issuance = service {
+  deduct : (principal, nat) -> (bool);
   getBalance : (principal) -> (nat) query;
-  mint : (nat) -> ();
-  myBalance : () -> (nat) query;
+  mint : (principal, nat) -> ();
 };
 service : () -> Issuance
