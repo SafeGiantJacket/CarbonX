@@ -1,0 +1,9 @@
+type Issuance = 
+ service {
+   deduct: (from: principal, amount: nat) -> (bool);
+   getBalance: (user: principal) -> (nat) query;
+   getMyBalance: () -> (nat);
+   mint: (to: principal, amount: nat) -> ();
+   mintToCaller: (amount: nat) -> ();
+ };
+service : () -> Issuance

@@ -1,0 +1,14 @@
+type Project = 
+ record {
+   createdAt: nat;
+   id: nat;
+   metadata: text;
+   name: text;
+   owner: principal;
+ };
+service : {
+  deleteProject: (id: nat) -> (bool);
+  getAllProjects: () -> (vec Project) query;
+  getProject: (id: nat) -> (opt Project) query;
+  registerProject: (name: text, metadata: text) -> (nat);
+}
