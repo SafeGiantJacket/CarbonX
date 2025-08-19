@@ -1,7 +1,14 @@
-type Listing = record { seller : principal; price : nat; amount : nat };
-type Marketplace = service {
-  buy : (nat, nat) -> ();
-  getListings : () -> (vec Listing) query;
-  list : (nat, nat) -> (nat);
-};
-service : () -> Marketplace
+type Listing = 
+ record {
+   active: bool;
+   creditId: text;
+   id: text;
+   price: nat;
+   seller: principal;
+ };
+service : {
+  createListing: (id: text, creditId: text, price: nat) -> (bool);
+  deactivateListing: (id: text) -> (bool);
+  getListing: (id: text) -> (opt Listing) query;
+  listActive: () -> (vec Listing) query;
+}

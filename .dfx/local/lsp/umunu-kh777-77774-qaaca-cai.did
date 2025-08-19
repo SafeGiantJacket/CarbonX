@@ -1,12 +1,14 @@
-type Retirement = service {
-  getAllRetirements : () -> (vec RetirementRecord) query;
-  getUserRetirements : (principal) -> (vec RetirementRecord) query;
-  retire : (nat, text) -> (bool);
-};
-type RetirementRecord = record {
-  user : principal;
-  timestamp : nat;
-  amount : nat;
-  reason : text;
-};
-service : Retirement
+type Batch = 
+ record {
+   amount: nat;
+   creator: principal;
+   id: text;
+   metadata: text;
+   owner: principal;
+ };
+service : {
+  getBatch: (id: text) -> (opt Batch) query;
+  listBatches: () -> (vec Batch) query;
+  registerBatch: (id: text, amount: nat, metadata: text) -> (bool);
+  transferBatch: (id: text, newOwner: principal) -> (bool);
+}

@@ -1,19 +1,19 @@
 export const idlFactory = ({ IDL }) => {
-  const RetirementRecord = IDL.Record({
-    'user' : IDL.Principal,
+  const Retired = IDL.Record({
+    'id' : IDL.Text,
+    'owner' : IDL.Principal,
+    'metadata' : IDL.Text,
     'timestamp' : IDL.Nat,
     'amount' : IDL.Nat,
-    'reason' : IDL.Text,
   });
-  const Retirement = IDL.Service({
-    'getAllRetirements' : IDL.Func([], [IDL.Vec(RetirementRecord)], ['query']),
-    'getUserRetirements' : IDL.Func(
-        [IDL.Principal],
-        [IDL.Vec(RetirementRecord)],
-        ['query'],
+  return IDL.Service({
+    'getRetired' : IDL.Func([IDL.Text], [IDL.Opt(Retired)], ['query']),
+    'listRetired' : IDL.Func([], [IDL.Vec(Retired)], ['query']),
+    'retireCredit' : IDL.Func(
+        [IDL.Text, IDL.Nat, IDL.Text, IDL.Nat],
+        [IDL.Bool],
+        [],
       ),
-    'retire' : IDL.Func([IDL.Nat, IDL.Text], [IDL.Bool], []),
   });
-  return Retirement;
 };
 export const init = ({ IDL }) => { return []; };

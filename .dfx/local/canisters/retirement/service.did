@@ -1,12 +1,14 @@
-type Retirement = service {
-  getAllRetirements : () -> (vec RetirementRecord) query;
-  getUserRetirements : (principal) -> (vec RetirementRecord) query;
-  retire : (nat, text) -> (bool);
-};
-type RetirementRecord = record {
-  user : principal;
-  timestamp : nat;
-  amount : nat;
-  reason : text;
-};
-service : Retirement
+type Retired = 
+ record {
+   amount: nat;
+   id: text;
+   metadata: text;
+   owner: principal;
+   timestamp: nat;
+ };
+service : {
+  getRetired: (id: text) -> (opt Retired) query;
+  listRetired: () -> (vec Retired) query;
+  retireCredit: (id: text, amount: nat, metadata: text, timestamp: nat) ->
+   (bool);
+}

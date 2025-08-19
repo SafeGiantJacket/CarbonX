@@ -1,8 +1,22 @@
 {
+  "name": "eco-cred",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:dfx": "dfx start --background --clean",
+    "deploy:all": "dfx deploy",
+    "deploy:issuance": "dfx deploy issuance",
+    "deploy:marketplace": "dfx deploy marketplace",
+    "deploy:registry": "dfx deploy registry",
+    "deploy:retirement": "dfx deploy retirement",
+    "frontend": "cd frontend && npm run dev",
+    "setup:local": "npm run start:dfx && npm run deploy:all && npm run frontend"
+  },
   "dependencies": {
     "@dfinity/agent": "^2.4.1",
     "@dfinity/auth-client": "^2.4.1",
     "@dfinity/candid": "^2.4.1",
     "@dfinity/identity": "^2.4.1"
   }
+  
 }

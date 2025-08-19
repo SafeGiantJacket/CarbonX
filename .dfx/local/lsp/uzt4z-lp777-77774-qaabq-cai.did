@@ -1,14 +1,14 @@
-type Project = 
+type Listing = 
  record {
-   createdAt: nat;
-   id: nat;
-   metadata: text;
-   name: text;
-   owner: principal;
+   active: bool;
+   creditId: text;
+   id: text;
+   price: nat;
+   seller: principal;
  };
 service : {
-  deleteProject: (id: nat) -> (bool);
-  getAllProjects: () -> (vec Project) query;
-  getProject: (id: nat) -> (opt Project) query;
-  registerProject: (name: text, metadata: text) -> (nat);
+  createListing: (id: text, creditId: text, price: nat) -> (bool);
+  deactivateListing: (id: text) -> (bool);
+  getListing: (id: text) -> (opt Listing) query;
+  listActive: () -> (vec Listing) query;
 }

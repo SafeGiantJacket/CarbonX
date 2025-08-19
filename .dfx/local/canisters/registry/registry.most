@@ -1,4 +1,12 @@
 // Version: 1.0.0
+type Batch__154218293 =
+  {
+    amount : Nat;
+    creator : Principal;
+    id : Text;
+    metadata : Text;
+    owner : Principal
+  };
 actor {
-  
+  stable var batches : [Batch__154218293]
 };

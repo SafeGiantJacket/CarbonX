@@ -1,0 +1,11 @@
+Deployed canisters.
+URLs:
+  Frontend canister via browser:
+    frontend:
+      - http://uxrrr-q7777-77774-qaaaq-cai.localhost:4943/ (Recommended)
+      - http://127.0.0.1:4943/?canisterId=uxrrr-q7777-77774-qaaaq-cai (Legacy)
+  Backend canister via Candid interface:
+    issuance: http://127.0.0.1:4943/?canisterId=ucwa4-rx777-77774-qaada-cai&id=u6s2n-gx777-77774-qaaba-cai
+    marketplace: http://127.0.0.1:4943/?canisterId=ucwa4-rx777-77774-qaada-cai&id=uzt4z-lp777-77774-qaabq-cai
+    registry: http://127.0.0.1:4943/?canisterId=ucwa4-rx777-77774-qaada-cai&id=umunu-kh777-77774-qaaca-cai
+    retirement: http://127.0.0.1:4943/?canisterId=ucwa4-rx777-77774-qaada-cai&id=ulvla-h7777-77774-qaacq-cai

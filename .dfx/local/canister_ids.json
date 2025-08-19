@@ -1,17 +1,20 @@
 {
   "__Candid_UI": {
-    "local": "ulvla-h7777-77774-qaacq-cai"
+    "local": "ucwa4-rx777-77774-qaada-cai"
   },
-  "issuance": {
+  "frontend": {
     "local": "uxrrr-q7777-77774-qaaaq-cai"
   },
-  "marketplace": {
+  "issuance": {
     "local": "u6s2n-gx777-77774-qaaba-cai"
   },
-  "registry": {
+  "marketplace": {
     "local": "uzt4z-lp777-77774-qaabq-cai"
   },
-  "retirement": {
+  "registry": {
     "local": "umunu-kh777-77774-qaaca-cai"
+  },
+  "retirement": {
+    "local": "ulvla-h7777-77774-qaacq-cai"
   }
 }

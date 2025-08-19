@@ -1,16 +1,16 @@
 export const idlFactory = ({ IDL }) => {
-  const Project = IDL.Record({
-    'id' : IDL.Nat,
+  const Batch = IDL.Record({
+    'id' : IDL.Text,
+    'creator' : IDL.Principal,
     'owner' : IDL.Principal,
     'metadata' : IDL.Text,
-    'name' : IDL.Text,
-    'createdAt' : IDL.Nat,
+    'amount' : IDL.Nat,
   });
   return IDL.Service({
-    'deleteProject' : IDL.Func([IDL.Nat], [IDL.Bool], []),
-    'getAllProjects' : IDL.Func([], [IDL.Vec(Project)], ['query']),
-    'getProject' : IDL.Func([IDL.Nat], [IDL.Opt(Project)], ['query']),
-    'registerProject' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
+    'getBatch' : IDL.Func([IDL.Text], [IDL.Opt(Batch)], ['query']),
+    'listBatches' : IDL.Func([], [IDL.Vec(Batch)], ['query']),
+    'registerBatch' : IDL.Func([IDL.Text, IDL.Nat, IDL.Text], [IDL.Bool], []),
+    'transferBatch' : IDL.Func([IDL.Text, IDL.Principal], [IDL.Bool], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

@@ -1,6 +1,12 @@
-type Issuance = service {
-  deduct : (principal, nat) -> (bool);
-  getBalance : (principal) -> (nat) query;
-  mint : (principal, nat) -> ();
-};
-service : Issuance
+type Credit = 
+ record {
+   amount: nat;
+   creator: principal;
+   id: text;
+   metadata: text;
+ };
+service : {
+  getCredit: (id: text) -> (opt Credit) query;
+  issueCredit: (id: text, amount: nat, metadata: text) -> (bool);
+  listCredits: () -> (vec Credit) query;
+}

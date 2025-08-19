@@ -1,21 +1,31 @@
 {
+  "version": 1,
   "canisters": {
-    "registry": {
-      "main": "motoko/registry/main.mo",
-      "type": "motoko"
-    },
     "issuance": {
-      "main": "motoko/issuance/main.mo",
+      "main": "backend/issuance/main.mo",
       "type": "motoko"
     },
     "marketplace": {
-      "main": "motoko/marketplace/main.mo",
+      "main": "backend/marketplace/main.mo",
+      "type": "motoko"
+    },
+    "registry": {
+      "main": "backend/registry/main.mo",
       "type": "motoko"
     },
     "retirement": {
-      "main": "motoko/retirement/main.mo",
+      "main": "backend/retirement/main.mo",
       "type": "motoko"
-    }
+    },
+    "frontend": {
+  "type": "assets",
+  "source": [
+    "frontend/carbon-frontend/dist"
+  ],
+  "build": "cd frontend/carbon-frontend && npm install && npm run build"
+}
+
+
   },
   "defaults": {
     "build": {
@@ -24,9 +34,13 @@
   },
   "networks": {
     "local": {
-      "bind": "127.0.0.1:8000",
+      "bind": "127.0.0.1:4943",
       "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://ic0.app"],
+      "type": "persistent"
     }
   },
-  "version": 1
+  "output_env_file": ".env"
 }

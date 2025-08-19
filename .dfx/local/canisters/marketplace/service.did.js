@@ -1,14 +1,16 @@
 export const idlFactory = ({ IDL }) => {
   const Listing = IDL.Record({
+    'id' : IDL.Text,
+    'active' : IDL.Bool,
     'seller' : IDL.Principal,
     'price' : IDL.Nat,
-    'amount' : IDL.Nat,
+    'creditId' : IDL.Text,
   });
-  const Marketplace = IDL.Service({
-    'buy' : IDL.Func([IDL.Nat, IDL.Nat], [], []),
-    'getListings' : IDL.Func([], [IDL.Vec(Listing)], ['query']),
-    'list' : IDL.Func([IDL.Nat, IDL.Nat], [IDL.Nat], []),
+  return IDL.Service({
+    'createListing' : IDL.Func([IDL.Text, IDL.Text, IDL.Nat], [IDL.Bool], []),
+    'deactivateListing' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'getListing' : IDL.Func([IDL.Text], [IDL.Opt(Listing)], ['query']),
+    'listActive' : IDL.Func([], [IDL.Vec(Listing)], ['query']),
   });
-  return Marketplace;
 };
 export const init = ({ IDL }) => { return []; };

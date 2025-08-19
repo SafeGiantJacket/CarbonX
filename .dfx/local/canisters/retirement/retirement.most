@@ -1,4 +1,12 @@
 // Version: 1.0.0
+type Retired__568550313 =
+  {
+    amount : Nat;
+    id : Text;
+    metadata : Text;
+    owner : Principal;
+    timestamp : Nat
+  };
 actor {
-  
+  stable var retiredCredits : [Retired__568550313]
 };

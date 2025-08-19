@@ -1,4 +1,6 @@
 // Version: 1.0.0
+type Credit__245466747 =
+  {amount : Nat; creator : Principal; id : Text; metadata : Text};
 actor {
-  
+  stable var credits : [Credit__245466747]
 };

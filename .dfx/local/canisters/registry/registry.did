@@ -1,14 +1,14 @@
-type Project = 
+type Batch = 
  record {
-   createdAt: nat;
-   id: nat;
+   amount: nat;
+   creator: principal;
+   id: text;
    metadata: text;
-   name: text;
    owner: principal;
  };
 service : {
-  deleteProject: (id: nat) -> (bool);
-  getAllProjects: () -> (vec Project) query;
-  getProject: (id: nat) -> (opt Project) query;
-  registerProject: (name: text, metadata: text) -> (nat);
+  getBatch: (id: text) -> (opt Batch) query;
+  listBatches: () -> (vec Batch) query;
+  registerBatch: (id: text, amount: nat, metadata: text) -> (bool);
+  transferBatch: (id: text, newOwner: principal) -> (bool);
 }

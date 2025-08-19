@@ -1,4 +1,12 @@
 // Version: 1.0.0
+type Listing__690260721 =
+  {
+    active : Bool;
+    creditId : Text;
+    id : Text;
+    price : Nat;
+    seller : Principal
+  };
 actor {
-  
+  stable var listings : [Listing__690260721]
 };
