@@ -1,0 +1,256 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated to more green-focused color palette */
+  --background: #0f1419;
+  --foreground: #ffffff;
+  --card: rgba(255, 255, 255, 0.08);
+  --card-foreground: #ffffff;
+  --popover: rgba(255, 255, 255, 0.9);
+  --popover-foreground: #0f1419;
+  --primary: #10b981;
+  --primary-foreground: #ffffff;
+  --secondary: #059669;
+  --secondary-foreground: #ffffff;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --accent: #34d399;
+  --accent-foreground: #0f1419;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(16, 185, 129, 0.2);
+  --input: #1f2937;
+  --ring: rgba(16, 185, 129, 0.5);
+  --chart-1: #10b981;
+  --chart-2: #059669;
+  --chart-3: #34d399;
+  --chart-4: #ef4444;
+  --chart-5: #6366f1;
+  --radius: 0.5rem;
+  --sidebar: rgba(15, 20, 25, 0.98);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #10b981;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #34d399;
+  --sidebar-accent-foreground: #0f1419;
+  --sidebar-border: rgba(16, 185, 129, 0.15);
+  --sidebar-ring: rgba(16, 185, 129, 0.3);
+}
+
+.dark {
+  /* Enhanced dark mode with green-focused accents */
+  --background: #0a0f0a;
+  --foreground: #ffffff;
+  --card: rgba(16, 185, 129, 0.05);
+  --card-foreground: #ffffff;
+  --popover: rgba(31, 41, 55, 0.95);
+  --popover-foreground: #ffffff;
+  --primary: #10b981;
+  --primary-foreground: #ffffff;
+  --secondary: #059669;
+  --secondary-foreground: #ffffff;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --accent: #34d399;
+  --accent-foreground: #0a0f0a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(16, 185, 129, 0.15);
+  --input: #111827;
+  --ring: rgba(16, 185, 129, 0.4);
+  --chart-1: #10b981;
+  --chart-2: #059669;
+  --chart-3: #34d399;
+  --chart-4: #ef4444;
+  --chart-5: #6366f1;
+  --radius: 0.5rem;
+  --sidebar: rgba(10, 15, 10, 0.98);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #10b981;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #34d399;
+  --sidebar-accent-foreground: #0a0f0a;
+  --sidebar-border: rgba(16, 185, 129, 0.12);
+  --sidebar-ring: rgba(16, 185, 129, 0.25);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Added custom animations and utilities for enhanced UX */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-green {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cyber-grid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-pulse-green {
+  animation: pulse-green 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 4s infinite;
+}
+
+.animate-cyber-grid {
+  animation: cyber-grid 60s linear infinite;
+}
+
+.glass-effect {
+  backdrop-filter: blur(6px);
+  background: rgba(16, 185, 129, 0.03);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.glass-morphism {
+  backdrop-filter: blur(8px) saturate(120%);
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gradient-border {
+  background: linear-gradient(45deg, #10b981, #34d399, #10b981);
+  background-size: 200% 200%;
+  animation: shimmer 6s ease infinite;
+}
+
+.hover-lift {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+}
+
+/* Added cyber-themed background patterns */
+.cyber-grid {
+  background-image: linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.neon-glow {
+  box-shadow: 0 0 2px rgba(16, 185, 129, 0.15), 0 0 4px rgba(16, 185, 129, 0.08);
+}
+
+.data-stream {
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.06), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 5s infinite;
+}
