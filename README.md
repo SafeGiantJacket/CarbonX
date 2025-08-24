@@ -1,113 +1,189 @@
-# 🌱 Carbon Ledger – Decentralized Carbon Credit System on ICP
+# 🌱 Carbon Ledger (CarbonX) – Decentralized Carbon Credit System on ICP
+
+> **Tagline:** *Trustless carbon economy on ICP — verifiable, fractional, and open to everyone.*
+
+---
 
 ## 📖 Introduction
 
-Carbon Ledger is a **decentralized carbon credit management system** built on the **Internet Computer Protocol (ICP)**. It provides **end-to-end lifecycle management** of carbon credits — issuance, trading, and retirement — ensuring that every credit is **verifiable, traceable, and tamper-proof**.
+Carbon Ledger (aka **CarbonX**) is a decentralized carbon credit management system built on the **Internet Computer Protocol (ICP)**. It covers the full lifecycle — **issuance → trading → retirement** — ensuring each credit is **verifiable, traceable, and tamper‑proof**.
 
-By leveraging **Motoko smart contracts** and ICP’s unique features, Carbon Ledger enables a **trustless, low-cost, and transparent registry** that empowers communities, industries, and governments to participate in a fairer carbon economy.
+Built with **Motoko** smart contracts and ICP’s native capabilities, CarbonX enables a **trustless, low‑cost, transparent** registry that empowers communities, industries, and governments to participate in a fairer carbon economy.
+
+---
+
+## ✨ What’s New (Aug 2025)
+
+* **IoT Integration**: Stream, validate, and persist environmental telemetry (e.g., CO₂ ppm, soil moisture, biomass proxies) from field sensors to support measurement, reporting, and verification (MRV).
+* **AI‑Based Fraud Detection**: Lightweight anomaly detection over claims and telemetry to flag suspicious data patterns prior to issuance and during monitoring.
+* **Tinkercad Circuit Demo**: Live prototype of the field sensor stack.
+
+  * 🔗 **Tinkercad Simulation:** [https://www.tinkercad.com/things/bsxHVtX7SHB-carmox](https://www.tinkercad.com/things/bsxHVtX7SHB-carmox)
 
 ---
 
 ## 🎯 Project Goals
 
-* Empower Global Climate Action → verifiable carbon offset tracking accessible to all.
-* Blockchain-Backed Trust → immutable, tamper-proof registries of credits.
-* Decentralized Marketplace → efficient trading of tokenized carbon credits.
-* True Accountability → retirement ensures credits can’t be double-counted.
-* Accessibility & Inclusion → support for small-scale farmers, local projects, and individuals.
+* **Empower Global Climate Action** → Verifiable carbon offset tracking accessible to all.
+* **Blockchain‑Backed Trust** → Immutable registries of credits.
+* **Decentralized Marketplace** → Efficient trading of tokenized carbon credits.
+* **True Accountability** → Retirement guarantees no double counting.
+* **Accessibility & Inclusion** → Onboard smallholder farmers, local projects, and individuals.
+* **IoT Evidence** → Continuous MRV via sensor streams.
+* **AI Guardrails** → Automated checks that surface anomalies and suspected manipulation.
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture Overview
 
-The system is built using **four Motoko canisters**, each serving a core role in the lifecycle:
+CarbonX uses **four Motoko canisters**, each mapping to a lifecycle phase:
 
-* **Registry Canister** – Stores verified carbon offset projects.
-* **Issuance Canister** – Issues tokenized credits for validated projects.
-* **Marketplace Canister** – Enables listing, trading, and settlement.
-* **Retirement Canister** – Retires credits permanently to prevent reuse.
+1. **Registry Canister** — Stores verified carbon projects and their metadata (methodology, baseline, monitoring plan, MRV sources).
+2. **Issuance Canister** — Issues tokenized credits for validated projects; enforces caps, vintages, and verification policies.
+3. **Marketplace Canister** — Lists, matches, and settles trades (asks/bids), with fee hooks.
+4. **Retirement Canister** — Irreversibly burns credits and emits public attestations.
 
-Each canister is **modular & composable**, interacting via **Candid interfaces** and **actor references**, ensuring flexibility for future extensions (e.g., multi-chain interoperability, AI verification).
+**Inter‑canister communication** uses **Candid** interfaces and actor references. Modules are composable for future extensions (multi‑chain bridges, AI verification, off‑chain oracles).
+
+---
+
+## 🔌 IoT Integration (NEW)
+
+**Goal:** Provide trustworthy, tamper‑resistant evidence for MRV.
+
+**Data flow**
+
+1. **Field Sensors / Edge** → capture telemetry (e.g., CO₂, temperature, humidity, NDVI proxy)
+2. **Gateway / Uploader** → signs payloads (t‑ECDSA optional) and sends to an **IoT Ingest API** (HTTP outcall-capable canister or boundary function)
+3. **IoT Adapter Canister** → normalizes, timestamps, and anchors data to the **Registry** (hash‑linked batches to reduce storage costs)
+4. **Verification Jobs** → Issuance reads recent telemetry summaries when minting credits
+
+**Minimal payload schema (example)**
+
+```json
+{
+  "projectId": "prj_abc123",
+  "deviceId": "dev_01",
+  "ts": 1724553600000,
+  "metrics": {
+    "co2_ppm": 412.7,
+    "soil_moisture": 0.26,
+    "temp_c": 28.4
+  },
+  "sig": "hex_or_base64_signature"
+}
+```
+
+**Security & integrity**
+
+* Device registration & key rotation per **deviceId**
+* Optional **t‑ECDSA** for verifiable signatures
+* Batch anchoring (Merkle roots) to minimize on‑chain bytes
+* Replay protection via nonces / monotonic timestamps
+
+**Demo**
+
+* 🔗 **Tinkercad circuit:** [https://www.tinkercad.com/things/bsxHVtX7SHB-carmox](https://www.tinkercad.com/things/bsxHVtX7SHB-carmox) (prototype sensor + uploader flow)
+
+---
+
+## 🧠 AI‑Based Fraud Detection (NEW)
+
+**Scope:** Basic, explainable checks that run during **issuance** and **ongoing monitoring**.
+
+**Techniques**
+
+* **Rule‑based sanity checks:** Range bounds, unit consistency, sampling frequency
+* **Time‑series anomaly detection:** Z‑score and rolling median absolute deviation
+* **Cross‑source corroboration:** Compare sensor data to satellite/IoT peers (where available)
+
+**Workflow**
+
+1. Issuance requests **TelemetrySummary** for a project window
+2. AI module computes **riskScore ∈ \[0,1]** and **flags\[]** with explanations
+3. If score > threshold → require human/partner verifier approval before mint
+
+**Sample result (concept)**
+
+```json
+{
+  "projectId": "prj_abc123",
+  "window": "2025-08-01..2025-08-25",
+  "riskScore": 0.37,
+  "flags": [
+    {"type": "GAP", "msg": "Missing data for 6h on 2025-08-10"},
+    {"type": "SPIKE", "msg": "co2_ppm spike at 3.5σ on 2025-08-18"}
+  ]
+}
+```
 
 ---
 
 ## 🧑‍💻 Tech Stack
 
-* 🧠 Motoko – Smart contracts language for ICP.
-* 🧪 DFINITY SDK (dfx) – Deployment & testing.
-* 🗃️ Candid Interfaces – Canister communication.
-* 🔗 Internet Computer Protocol (ICP) – Decentralized hosting & scalability.
-* 🧠 WebAssembly Smart Contracts – Secure, deterministic execution.
-* 🌍 Optional ICP Features (Future) → HTTP outcalls, t-ECDSA, Bitcoin API for payments.
+* **Motoko** — Smart contracts
+* **DFINITY SDK (dfx)** — Local replica, deploy, test
+* **Candid** — Inter‑canister interfaces
+* **ICP** — Decentralized hosting & scalability
+* **WebAssembly** — Deterministic execution
+* **Optional:** HTTP outcalls, **t‑ECDSA**, Bitcoin API for payments
 
 ---
 
 ## 💡 Uniqueness
 
-* Unlike traditional carbon markets (opaque, centralized), Carbon Ledger is **fully decentralized** and **community-accessible**.
-* By **tokenizing carbon credits**, it makes them **fractional & tradable**, lowering barriers for small-scale participants.
-* Built entirely on **ICP’s native smart contract model**, ensuring **cost-efficiency and scalability**.
+* Fully decentralized, community‑accessible registry vs. opaque, centralized markets
+* **Fractionalized credits** for low‑barrier participation
+* **Native ICP** design for low fees & scalability
+* **IoT‑backed MRV** + **AI guardrails** improve trust and auditability
 
 ---
 
 ## 💰 Revenue Model
 
-* Transaction Fees → minimal fee on every marketplace trade.
-* Verification Services → issuers pay small fees for project validation (via partners/AI).
-* Carbon-backed DeFi (Future) → credits used as collateral for lending, staking, and green finance.
-* **Adoption strategy** → onboard farmers, NGOs, SMEs first, then scale to governments & enterprises.
+* **Transaction Fees** — Minimal fee on marketplace trades
+* **Verification Services** — Issuers pay small fees for validation partners / AI checks
+* **Carbon‑backed DeFi (Future)** — Use credits as collateral; staking & green finance
+* **Adoption** — Start with farmers/NGOs/SMEs → scale to governments & enterprises
 
 ---
 
-## 🌐 Full-Stack Development
+## 🌐 Full‑Stack Development Scope
 
-* ✅ Smart contract backend (Motoko canisters).
-* ✅ Candid APIs for inter-canister communication.
-* ✅ Marketplace flow (issue → trade → retire).
-
----
-
-## 🖼️ Presentation Quality
-
-* Clear positioning: *“Carbon Ledger = Trustless Carbon Economy on ICP”*.
-* Professional branding (logos, diagrams, clean README).
-* Storytelling: From **climate problem → ICP-powered solution → real-world use cases**.
+* ✅ Smart‑contract backend (4 canisters)
+* ✅ Candid APIs for inter‑canister calls
+* ✅ IoT ingest + summaries for issuance
+* ✅ Basic AI fraud checks in issuance path
+* ✅ Marketplace flow (issue → trade → retire)
 
 ---
 
 ## 📊 Utility & Value
 
-* Tackles the **global carbon credit trust gap**.
-* Provides **open & auditable infrastructure** for carbon accountability.
-* Generates **economic opportunities for communities** via fractionalized carbon credits.
+* Closes the **trust gap** in carbon markets
+* Open, auditable infrastructure for accountability
+* Enables **income for communities** via fractional credits
 
 ---
 
 ## ⚙️ Code Quality
 
-* Clean Motoko modular structure (4 canisters).
-* Efficient use of ICP’s actor model & candid interfaces.
-* Open-source on GitHub for transparency.
+* Modular Motoko structure (4 canisters + adapters)
+* Efficient actor model & Candid interfaces
+* Open‑source on GitHub
 
 ---
 
-## 📚 Documentation (Checklist)
+## 📚 Documentation Checklist
 
-* ✅ Introduction
+* ✅ Introduction & goals
 * ✅ Architecture description
-* ✅ Build & deployment instructions (`dfx start`, `dfx deploy`)
-* 🔗 Mainnet Canister IDs (to be added post-deploy)
-* ✅ ICP features used (canisters, candid, decentralized hosting)
-* ⚡ Challenges faced (integration complexity, testing inter-canister calls)
-* 🚀 Future plans (AI verification, DeFi integration, multi-chain bridges)
-
----
-
-## 🔧 Technical Difficulty
-
-* Multi-canister modular design (non-trivial for newcomers).
-* Cross-canister communication with candid interfaces.
-* Potential ICP advanced features (HTTP outcalls for satellite data, t-ECDSA for off-chain signatures).
+* ✅ IoT & AI modules (NEW)
+* ✅ Build & deployment (local → mainnet)
+* 🔗 **Mainnet Canister IDs:** *to be added post‑deploy*
+* ✅ ICP features used
+* ⚡ Challenges (inter‑canister orchestration, testing, data integrity)
+* 🚀 Future: AI upgrades, DeFi, multi‑chain bridges
 
 ---
 
@@ -125,11 +201,66 @@ dfx start --background
 dfx deploy
 ```
 
+**Repo:** [https://github.com/SafeGiantJacket/carbon-ledger](https://github.com/SafeGiantJacket/carbon-ledger)
+
+---
+
+## 🔒 Interfaces (Sketch)
+
+**Registry.did** (excerpt)
+
+```candid
+service : {
+  create_project: (ProjectSpec) -> (ProjectId);
+  get_project: (ProjectId) -> (opt Project);
+  anchor_telemetry_batch: (ProjectId, HashRoot, BatchMeta) -> (BatchId);
+}
+```
+
+**Issuance.did** (excerpt)
+
+```candid
+service : {
+  request_mint: (ProjectId, Window) -> (MintTicket);
+  finalize_mint: (MintTicket) -> (CreditBatchId);
+  get_anomaly_report: (ProjectId, Window) -> (AnomalyReport);
+}
+```
+
+---
+
+## 🧪 Testing & Validation
+
+* Unit tests for canister logic
+* Simulated IoT payloads & edge‑case fixtures
+* Replay & signature tests (t‑ECDSA where enabled)
+* Issuance gating via anomaly thresholds
+
+---
+
+## ⚡ Challenges
+
+* Cross‑canister orchestration & failure handling
+* Cost‑aware data anchoring for high‑volume telemetry
+* Calibration & drift in field sensors
+* Avoiding false positives in anomaly detection
+
 ---
 
 ## 🌍 Future Plans
 
-* 🤖 AI-powered verification of carbon projects using satellite + IoT data.
-* 🌉 Cross-chain carbon credits for Ethereum & other ecosystems.
-* 💵 DeFi integrations → carbon-backed stablecoins & staking.
-* 🌱 Partnerships with NGOs, SMEs, and governments for pilot deployments.
+* 🤖 Advanced AI: semi‑supervised & satellite fusion, explainability reports
+* 🌉 Cross‑chain credits (Ethereum, etc.)
+* 💵 DeFi: carbon‑backed stablecoins & staking
+* 🤝 Partnerships with NGOs, SMEs, governments for pilots
+
+---
+
+## 📎 Links
+
+* **GitHub:** [https://github.com/SafeGiantJacket/carbon-ledger](https://github.com/SafeGiantJacket/carbon-ledger)
+* **Tinkercad IoT Simulation:** [https://www.tinkercad.com/things/bsxHVtX7SHB-carmox](https://www.tinkercad.com/things/bsxHVtX7SHB-carmox)
+
+---
+
+### © CarbonX 2025 — Open‑source, climate‑positive infrastructure.
