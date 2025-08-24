@@ -1,4 +1,4 @@
-# 🌱 Carbon Ledger (CarbonX) – Decentralized Carbon Credit System on ICP
+# 🌱 CarbonX – Decentralized Carbon Credit System on ICP
 
 > **Tagline:** *Trustless carbon economy on ICP — verifiable, fractional, and open to everyone.*
 
