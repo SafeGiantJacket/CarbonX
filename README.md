@@ -1,137 +1,118 @@
-#🌱 Carbon Ledger – Decentralized Carbon Credit System on ICP
-📖 Introduction
+# 🌱 Carbon Ledger – Decentralized Carbon Credit System on ICP
 
-Carbon Ledger is a decentralized carbon credit management system built on the Internet Computer Protocol (ICP). It provides end-to-end lifecycle management of carbon credits — issuance, trading, and retirement — ensuring that every credit is verifiable, traceable, and tamper-proof.
+## 📖 Introduction
 
-By leveraging Motoko smart contracts and ICP’s unique features, Carbon Ledger enables a trustless, low-cost, and transparent registry that empowers communities, industries, and governments to participate in a fairer carbon economy.
+Carbon Ledger is a **decentralized carbon credit management system** built on the **Internet Computer Protocol (ICP)**. It provides **end-to-end lifecycle management** of carbon credits — issuance, trading, and retirement — ensuring that every credit is **verifiable, traceable, and tamper-proof**.
 
-#🎯 Project Goals
+By leveraging **Motoko smart contracts** and ICP’s unique features, Carbon Ledger enables a **trustless, low-cost, and transparent registry** that empowers communities, industries, and governments to participate in a fairer carbon economy.
 
-Empower Global Climate Action → verifiable carbon offset tracking accessible to all.
+---
 
-Blockchain-Backed Trust → immutable, tamper-proof registries of credits.
+## 🎯 Project Goals
 
-Decentralized Marketplace → efficient trading of tokenized carbon credits.
+* Empower Global Climate Action → verifiable carbon offset tracking accessible to all.
+* Blockchain-Backed Trust → immutable, tamper-proof registries of credits.
+* Decentralized Marketplace → efficient trading of tokenized carbon credits.
+* True Accountability → retirement ensures credits can’t be double-counted.
+* Accessibility & Inclusion → support for small-scale farmers, local projects, and individuals.
 
-True Accountability → retirement ensures credits can’t be double-counted.
+---
 
-Accessibility & Inclusion → support for small-scale farmers, local projects, and individuals.
+## 🏗️ Architecture
 
-#🏗️ Architecture
+The system is built using **four Motoko canisters**, each serving a core role in the lifecycle:
 
-The system is built using four Motoko canisters, each serving a core role in the lifecycle:
+* **Registry Canister** – Stores verified carbon offset projects.
+* **Issuance Canister** – Issues tokenized credits for validated projects.
+* **Marketplace Canister** – Enables listing, trading, and settlement.
+* **Retirement Canister** – Retires credits permanently to prevent reuse.
 
-Registry Canister – Stores verified carbon offset projects.
+Each canister is **modular & composable**, interacting via **Candid interfaces** and **actor references**, ensuring flexibility for future extensions (e.g., multi-chain interoperability, AI verification).
 
-Issuance Canister – Issues tokenized credits for validated projects.
+---
 
-Marketplace Canister – Enables listing, trading, and settlement.
+## 🧑‍💻 Tech Stack
 
-Retirement Canister – Retires credits permanently to prevent reuse.
+* 🧠 Motoko – Smart contracts language for ICP.
+* 🧪 DFINITY SDK (dfx) – Deployment & testing.
+* 🗃️ Candid Interfaces – Canister communication.
+* 🔗 Internet Computer Protocol (ICP) – Decentralized hosting & scalability.
+* 🧠 WebAssembly Smart Contracts – Secure, deterministic execution.
+* 🌍 Optional ICP Features (Future) → HTTP outcalls, t-ECDSA, Bitcoin API for payments.
 
-Each canister is modular & composable, interacting via Candid interfaces and actor references, ensuring flexibility for future extensions (e.g., multi-chain interoperability, AI verification).
+---
 
+## 💡 Uniqueness
 
+* Unlike traditional carbon markets (opaque, centralized), Carbon Ledger is **fully decentralized** and **community-accessible**.
+* By **tokenizing carbon credits**, it makes them **fractional & tradable**, lowering barriers for small-scale participants.
+* Built entirely on **ICP’s native smart contract model**, ensuring **cost-efficiency and scalability**.
 
-#🧑‍💻 Tech Stack
+---
 
-🧠 Motoko – Smart contracts language for ICP.
+## 💰 Revenue Model
 
-🧪 DFINITY SDK (dfx) – Deployment & testing.
+* Transaction Fees → minimal fee on every marketplace trade.
+* Verification Services → issuers pay small fees for project validation (via partners/AI).
+* Carbon-backed DeFi (Future) → credits used as collateral for lending, staking, and green finance.
+* **Adoption strategy** → onboard farmers, NGOs, SMEs first, then scale to governments & enterprises.
 
-🗃️ Candid Interfaces – Canister communication.
+---
 
-🔗 Internet Computer Protocol (ICP) – Decentralized hosting & scalability.
+## 🌐 Full-Stack Development
 
-🧠 WebAssembly Smart Contracts – Secure, deterministic execution.
+* ✅ Smart contract backend (Motoko canisters).
+* ✅ Candid APIs for inter-canister communication.
+* ✅ Marketplace flow (issue → trade → retire).
 
-🌍 Optional ICP Features (Future) → HTTP outcalls, t-ECDSA, Bitcoin API for payments.
+---
 
+## 🖼️ Presentation Quality
 
-#💡 Uniqueness 
+* Clear positioning: *“Carbon Ledger = Trustless Carbon Economy on ICP”*.
+* Professional branding (logos, diagrams, clean README).
+* Storytelling: From **climate problem → ICP-powered solution → real-world use cases**.
 
-Unlike traditional carbon markets (opaque, centralized), Carbon Ledger is fully decentralized and community-accessible.
+---
 
-By tokenizing carbon credits, it makes them fractional & tradable, lowering barriers for small-scale participants.
+## 📊 Utility & Value
 
-Built entirely on ICP’s native smart contract model, not relying on external blockchains, ensuring cost-efficiency and scalability.
+* Tackles the **global carbon credit trust gap**.
+* Provides **open & auditable infrastructure** for carbon accountability.
+* Generates **economic opportunities for communities** via fractionalized carbon credits.
 
+---
 
-#💰 Revenue Model
+## ⚙️ Code Quality
 
-Transaction Fees → minimal fee on every marketplace trade.
+* Clean Motoko modular structure (4 canisters).
+* Efficient use of ICP’s actor model & candid interfaces.
+* Open-source on GitHub for transparency.
 
-Verification Services → issuers pay small fees for project validation (via partners/AI).
+---
 
-Carbon-backed DeFi (Future) → credits used as collateral for lending, staking, and green finance.
+## 📚 Documentation (Checklist)
 
-Adoption strategy → onboard farmers, NGOs, SMEs first, then scale to governments & enterprises.
+* ✅ Introduction
+* ✅ Architecture description
+* ✅ Build & deployment instructions (`dfx start`, `dfx deploy`)
+* 🔗 Mainnet Canister IDs (to be added post-deploy)
+* ✅ ICP features used (canisters, candid, decentralized hosting)
+* ⚡ Challenges faced (integration complexity, testing inter-canister calls)
+* 🚀 Future plans (AI verification, DeFi integration, multi-chain bridges)
 
+---
 
-#🌐 Full-Stack Development
+## 🔧 Technical Difficulty
 
-✅ Smart contract backend (Motoko canisters).
+* Multi-canister modular design (non-trivial for newcomers).
+* Cross-canister communication with candid interfaces.
+* Potential ICP advanced features (HTTP outcalls for satellite data, t-ECDSA for off-chain signatures).
 
-✅ Candid APIs for inter-canister communication.
+---
 
-✅ Marketplace flow (issue → trade → retire).
+## 🚀 Getting Started
 
-
-
-#🖼️ Presentation Quality
-
-Clear positioning: “Carbon Ledger = Trustless Carbon Economy on ICP”.
-
-Professional branding (logos, diagrams, clean README).
-
-Storytelling: From climate problem → ICP-powered solution → real-world use cases.
-
-
-#📊 Utility & Value
-
-Tackles the global carbon credit trust gap.
-
-Provides open & auditable infrastructure for carbon accountability.
-
-Generates economic opportunities for communities via fractionalized carbon credits.
-
-
-#⚙️ Code Quality
-
-Clean Motoko modular structure (4 canisters).
-
-Efficient use of ICP’s actor model & candid interfaces.
-
-Open-source on GitHub for transparency.
-
-
-#📚 Documentation (Checklist)
-
-✅ Introduction
-
-✅ Architecture description
-
-✅ Build & deployment instructions (dfx start, dfx deploy)
-
-🔗 Mainnet Canister IDs (to be added post-deploy)
-
-✅ ICP features used (canisters, candid, decentralized hosting)
-
-⚡ Challenges faced (integration complexity, testing inter-canister calls)
-
-🚀 Future plans (AI verification, DeFi integration, multi-chain bridges)
-
-
-#🔧 Technical Difficulty
-
-Multi-canister modular design (non-trivial for newcomers).
-
-Cross-canister communication with candid interfaces.
-
-Potential ICP advanced features (HTTP outcalls for satellite data, t-ECDSA for off-chain signatures).
-
-
-🚀 Getting Started
 ```bash
 # Clone repo
 git clone https://github.com/SafeGiantJacket/carbon-ledger.git
@@ -144,12 +125,11 @@ dfx start --background
 dfx deploy
 ```
 
-#🌍 Future Plans
+---
 
-AI-powered verification of carbon projects using satellite + IoT data.
+## 🌍 Future Plans
 
-Cross-chain carbon credits for Ethereum & other ecosystems.
-
-DeFi integrations → carbon-backed stablecoins & staking.
-
-Partnerships with NGOs, SMEs, and governments for pilot deployments.
+* 🤖 AI-powered verification of carbon projects using satellite + IoT data.
+* 🌉 Cross-chain carbon credits for Ethereum & other ecosystems.
+* 💵 DeFi integrations → carbon-backed stablecoins & staking.
+* 🌱 Partnerships with NGOs, SMEs, and governments for pilot deployments.
