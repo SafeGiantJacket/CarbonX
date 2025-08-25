@@ -12,10 +12,16 @@ const int gasThreshold = 400;   // arbitrary ppm value
 const int lightThreshold = 300; // arbitrary brightness
 
 void setup() {
+  // LCD setup
   lcd_1.begin(16, 2);
   lcd_1.setBacklight(1);
 
+  // Serial setup
+  Serial.begin(9600);
+  while (!Serial) { } // wait for serial (for boards like Leonardo)
+
   lcd_1.print("CarbonX Monitor");
+  Serial.println("CarbonX Monitor");
   delay(2000);
   lcd_1.clear();
 }
@@ -61,6 +67,18 @@ void loop() {
   lcd_1.print(temperatureC,1);
   lcd_1.print("C ");
   lcd_1.print(airQuality);
+
+  // === Print to Serial Monitor ===
+  Serial.print("Gas: ");
+  Serial.print(gasValue);
+  Serial.print(" | Light: ");
+  Serial.print(lightValue);
+  Serial.print(" (");
+  Serial.print(lightStatus);
+  Serial.print(") | Temp: ");
+  Serial.print(temperatureC,1);
+  Serial.print(" C | Air Quality: ");
+  Serial.println(airQuality);
 
   delay(1500);
 }
