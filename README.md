@@ -11,6 +11,7 @@ Carbon Ledger (aka **CarbonX**) is a decentralized carbon credit management syst
 Built with **Motoko** smart contracts and ICP’s native capabilities, CarbonX enables a **trustless, low‑cost, transparent** registry that empowers communities, industries, and governments to participate in a fairer carbon economy.
 
 **Pitch Video**: https://youtu.be/OwJZY3jRlv8
+
 **Demo Video**: https://www.youtube.com/watch?v=YKq00JrW9XM
 
 ---
