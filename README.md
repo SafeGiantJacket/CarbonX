@@ -18,7 +18,29 @@ Built with **Motoko** smart contracts and ICP’s native capabilities, CarbonX e
 
 ## ✨ What’s New (Aug 2025)
 
-### 🚀 Backend Upgrades (Sep 2025)
+
+### 🚀 Final Add-ons & Professional Features (Sep 2025)
+
+**Notifications & Activity Feed**
+**Role-Based Permissions**
+**Batch Actions**
+**Export & Reporting**
+**API Access**
+
+These features make CarbonX enterprise-ready, user-friendly, and highly auditable for climate, finance, and regulatory use cases.
+
+**Frontend Integration**
+- Full integration with backend canisters (Issuance, Marketplace, Registry, Retirement) using ICP agent libraries and Candid interfaces
+- Modern React/Next.js UI for all flows: credit issuance, marketplace trading, registry management, retirement actions
+- Fractional buying and trading supported in UI and backend
+- User authentication and role-based access (admin, verifier, buyer, seller)
+- Analytics dashboard for credits, marketplace, and retirements
+- Multi-language and mobile-friendly UI (planned)
+
+**AI Fraud Detection**
+- AI-based anomaly detection and fraud checks integrated in frontend and backend
+- Risk scores and flags shown during issuance and monitoring
+- Automated gating for suspicious activity
 
 **Issuance Canister**
 - Credit revocation (remove invalid credits)
