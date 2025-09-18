@@ -18,6 +18,40 @@ Built with **Motoko** smart contracts and ICP’s native capabilities, CarbonX e
 
 ## ✨ What’s New (Aug 2025)
 
+### 🚀 Backend Upgrades (Sep 2025)
+
+**Issuance Canister**
+- Credit revocation (remove invalid credits)
+- Credit metadata update endpoint
+- Credit history tracking (issuance, updates, revocations)
+- List active/non-revoked credits
+
+**Marketplace Canister**
+- Royalty logic for listings (configurable percentage, suitable for India)
+- Purchase functionality with royalty distribution
+- Listing history tracking (creation, price updates, purchases, deactivation)
+- Price update endpoint
+- Advanced queries: by seller, by buyer, all listings
+
+**Registry Canister**
+- Batch metadata update endpoint
+- Batch deletion (soft delete for invalid batches)
+- Batch transfer history tracking
+- Owner-based batch queries
+- List active/non-deleted batches
+
+**Retirement Canister**
+- Retirement reason field
+- Undo retirement (with audit log)
+- Retirement history tracking
+- Owner-based retirement queries
+- List active/non-undone retirements
+
+**General**
+- Audit/history tracking for all major actions
+- Advanced search/filtering for all queries
+- All new features are additive and do not remove any previous functionality
+
 * **IoT Integration**: Stream, validate, and persist environmental telemetry (e.g., CO₂ ppm, soil moisture, biomass proxies) from field sensors to support measurement, reporting, and verification (MRV).
 * **AI‑Based Fraud Detection**: Lightweight anomaly detection over claims and telemetry to flag suspicious data patterns prior to issuance and during monitoring.
 * **Tinkercad Circuit Demo**: Live prototype of the field sensor stack.
