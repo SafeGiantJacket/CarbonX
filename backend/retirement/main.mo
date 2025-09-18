@@ -13,6 +13,8 @@ actor Retirement {
     timestamp : Nat;
     reason : Text;
     undone : Bool;
+    fractionTotal : Nat;
+    fractionRetired : Nat;
   };
 
   type RetirementHistory = {
@@ -30,6 +32,8 @@ actor Retirement {
     id : Text,
     amount : Nat,
     metadata : Text,
+    fractionTotal : Nat,
+    fractionRetired : Nat,
     timestamp : Nat,
     reason : Text
   ) : async Bool {
@@ -45,6 +49,8 @@ actor Retirement {
       timestamp = timestamp;
       reason = reason;
       undone = false;
+      fractionTotal = fractionTotal;
+      fractionRetired = fractionRetired;
     };
 
     retiredCredits := Array.append<Retired>(retiredCredits, [entry]);
@@ -52,7 +58,7 @@ actor Retirement {
       id = id;
       event = "retired";
       timestamp = timestamp;
-      details = "Retired by " # Principal.toText(caller) # ", Reason: " # reason;
+      details = "Retired by " # Principal.toText(caller) # ", Reason: " # reason # ", Fraction: " # Nat.toText(fractionRetired) # "/" # Nat.toText(fractionTotal);
     }]);
     return true;
   };

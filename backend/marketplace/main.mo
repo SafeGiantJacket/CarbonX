@@ -13,6 +13,8 @@ actor Marketplace {
     active : Bool;
     royaltyPercent : Nat;
     buyer : ?Principal;
+    fractionAvailable : Nat;
+    fractionTotal : Nat;
   };
 
   type ListingHistory = {
@@ -31,6 +33,7 @@ actor Marketplace {
     creditId : Text,
     price : Nat,
     royaltyPercent : Nat,
+    fractionTotal : Nat,
     timestamp : Nat
   ) : async Bool {
     if (Array.find<Listing>(listings, func(l) = l.id == id) != null) {
@@ -45,6 +48,8 @@ actor Marketplace {
       active = true;
       royaltyPercent = royaltyPercent;
       buyer = null;
+      fractionAvailable = fractionTotal;
+      fractionTotal = fractionTotal;
     };
 
     listings := Array.append<Listing>(listings, [listing]);
@@ -82,23 +87,27 @@ actor Marketplace {
     }
   };
 
-  // Purchase listing
-  public shared({ caller }) func purchaseListing(id : Text, timestamp : Nat) : async Bool {
+  // Fractional purchase
+  public shared({ caller }) func purchaseFraction(id : Text, fraction : Nat, timestamp : Nat) : async Bool {
     switch (Array.find<Listing>(listings, func(l) = l.id == id)) {
       case null { false };
       case (?listing) {
-        if (not listing.active or listing.seller == caller) return false;
-        // Royalty logic: royaltyPercent of price goes to seller, rest to platform (simulate)
-        let royalty = (listing.price * listing.royaltyPercent) / 100;
-        let platformShare = listing.price - royalty;
+        if (not listing.active or listing.seller == caller or fraction == 0 or fraction > listing.fractionAvailable) return false;
+        let price = (listing.price * fraction) / listing.fractionTotal;
+        let royalty = (price * listing.royaltyPercent) / 100;
+        let platformShare = price - royalty;
+        let newFractionAvailable = listing.fractionAvailable - fraction;
+        let newActive = newFractionAvailable > 0;
         listings := Array.map<Listing, Listing>(listings, func(l) {
-          if (l.id == id) { { l with active = false; buyer = ?caller } } else { l }
+          if (l.id == id) {
+            { l with fractionAvailable = newFractionAvailable; active = newActive; buyer = ?caller }
+          } else { l }
         });
         history := Array.append<ListingHistory>(history, [{
           id = id;
-          event = "purchased";
+          event = "fraction_purchased";
           timestamp = timestamp;
-          details = "Purchased by " # Principal.toText(caller) # ", Royalty: " # Nat.toText(royalty) # ", Platform: " # Nat.toText(platformShare);
+          details = "Purchased " # Nat.toText(fraction) # "/" # Nat.toText(listing.fractionTotal) # " by " # Principal.toText(caller) # ", Royalty: " # Nat.toText(royalty) # ", Platform: " # Nat.toText(platformShare);
         }]);
         true
       }

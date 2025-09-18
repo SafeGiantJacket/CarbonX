@@ -11,6 +11,8 @@ actor Issuance {
     amount : Nat;
     metadata : Text;
     revoked : Bool;
+    fractionTotal : Nat;
+    fractionAvailable : Nat;
   };
 
   type CreditHistory = {
@@ -28,6 +30,7 @@ actor Issuance {
     id : Text,
     amount : Nat,
     metadata : Text,
+    fractionTotal : Nat,
     timestamp : Nat
   ) : async Bool {
     if (Array.find<Credit>(credits, func(c) = c.id == id) != null) {
@@ -40,6 +43,8 @@ actor Issuance {
       amount = amount;
       metadata = metadata;
       revoked = false;
+      fractionTotal = fractionTotal;
+      fractionAvailable = fractionTotal;
     };
 
     credits := Array.append<Credit>(credits, [credit]);

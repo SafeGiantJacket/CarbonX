@@ -12,6 +12,8 @@ actor Registry {
     amount : Nat;
     metadata : Text;
     deleted : Bool;
+    fractionTotal : Nat;
+    fractionAvailable : Nat;
   };
 
   type BatchHistory = {
@@ -29,6 +31,7 @@ actor Registry {
     id : Text,
     amount : Nat,
     metadata : Text,
+    fractionTotal : Nat,
     timestamp : Nat
   ) : async Bool {
     if (Array.find<Batch>(batches, func(b) = b.id == id) != null) {
@@ -42,6 +45,8 @@ actor Registry {
       amount = amount;
       metadata = metadata;
       deleted = false;
+      fractionTotal = fractionTotal;
+      fractionAvailable = fractionTotal;
     };
 
     batches := Array.append<Batch>(batches, [batch]);
